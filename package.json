@@ -12,5 +12,8 @@
     "gridsome": "^0.7.0",
     "gridsome-plugin-netlify-cms": "^1.0.9",
     "netlify-cms": "^2.9.7"
+  },
+  "devDependencies": {
+    "gridsome-plugin-tailwindcss": "^2.2.26"
   }
 }

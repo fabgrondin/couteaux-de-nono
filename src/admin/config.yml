@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: fabgrondin/couteaux-de-nono
+  name: git-gateway
 
 media_folder: "static/uploads"
 public_folder: "/uploads"
@@ -13,6 +12,6 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Excerpt", name: "excerpt", widget: "string"}
+      - {label: "Images", name: "thumbnail", widget: "image"}
       - {label: "Publish Date", name: "date", widget: "date"}
       - {label: "Body", name: "body", widget: "markdown"}
