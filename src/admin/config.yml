@@ -4,6 +4,8 @@ backend:
 media_folder: "static/uploads"
 public_folder: "/uploads"
 
+locale: 'fr'
+
 collections:
   - name: "posts"
     label: "Posts"

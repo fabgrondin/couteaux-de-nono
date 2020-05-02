@@ -1,14 +1,31 @@
 <template>
-  <div class="w-screen h-screen bg-black text-white">
-    <div class="container mx-auto">
-      <header class="flex justify-end items-center mb-4 h-20 px-2">
+  <div class="bg-black text-gray-100">
+    <div class="container min-h-screen flex flex-col mx-auto px-2 lg:px-0">
+      <header class="flex justify-center md:justify-end items-center h-20 px-2">
         <nav class="nav">
-          <g-link class="ml-6" to="/">Accueil</g-link>
-          <g-link class="ml-6" to="/mes-couteaux">Mes couteaux</g-link>
-          <g-link class="ml-6" to="/a-propos/">À propos</g-link>
+          <g-link
+            class="px-2 border-2 border-transparent rounded-md transition-colors duration-500 hover:bg-gray-900"
+            exact-active-class="border-gray-100"
+            to="/"
+          >Accueil</g-link>
+          <g-link
+            class="ml-6 px-2 border-2 border-transparent rounded-md transition-colors duration-500 hover:bg-gray-900"
+            exact-active-class="border-gray-100"
+            to="/mes-couteaux"
+          >Mes couteaux</g-link>
+          <g-link
+            class="ml-6 px-2 border-2 border-transparent rounded-md transition-colors duration-500 hover:bg-gray-900"
+            exact-active-class="border-gray-100"
+            to="/a-propos"
+          >À propos</g-link>
         </nav>
       </header>
-      <slot />
+      <main class="flex-grow">
+        <slot />
+      </main>
+      <footer class="flex justify-center mb-2">
+        <p>Les couteaux de Nono © {{ (new Date()).getFullYear() }}</p>
+      </footer>
     </div>
   </div>
 </template>
