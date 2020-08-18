@@ -1,6 +1,6 @@
 ---
 title: Mon premier Couteau
-thumbnail: /uploads/crm_old.png
+thumbnail: /uploads/knife-1088529_1280.png
 date: 2019-11-02T13:15:02.929Z
 order: 1
 ---
