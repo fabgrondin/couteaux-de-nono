@@ -1,33 +1,43 @@
 <template>
-  <div class="bg-black text-gray-100">
-    <div class="container min-h-screen flex flex-col mx-auto px-2 lg:px-0">
-      <header class="flex justify-center md:justify-end items-center h-20 px-2">
-        <nav class="nav">
-          <g-link
-            class="px-2 border-2 border-transparent rounded-md transition-colors duration-500 hover:bg-gray-900"
-            exact-active-class="border-gray-100"
-            to="/"
-          >Accueil</g-link>
-          <g-link
-            class="ml-6 px-2 border-2 border-transparent rounded-md transition-colors duration-500 hover:bg-gray-900"
-            exact-active-class="border-gray-100"
-            to="/mes-couteaux"
-          >Mes couteaux</g-link>
-          <g-link
-            class="ml-6 px-2 border-2 border-transparent rounded-md transition-colors duration-500 hover:bg-gray-900"
-            exact-active-class="border-gray-100"
-            to="/a-propos"
-          >À propos</g-link>
-        </nav>
-      </header>
-      <main class="flex-grow">
-        <slot />
-      </main>
-      <footer class="flex justify-center mb-2">
-        <p>Les couteaux de Nono © {{ (new Date()).getFullYear() }}</p>
-      </footer>
-    </div>
-  </div>
+  <v-app>
+    <v-navigation-drawer class="hidden-sm-and-up" v-model="sidebar" app>
+      <v-list>
+        <v-list-item>
+          <v-btn to="/">Accueil</v-btn>
+        </v-list-item>
+        <v-list-item>
+          <v-btn to="/mes-couteaux">Mes couteaux</v-btn>
+        </v-list-item>
+        <v-list-item>
+          <v-btn to="/a-propos">À propos</v-btn>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+    <v-app-bar app>
+      <v-app-bar-nav-icon class="hidden-sm-and-up" @click="sidebar = !sidebar"></v-app-bar-nav-icon>
+      <v-toolbar-title>Les couteaux de Nono</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <div class="hidden-xs-only">
+        <v-btn to="/" class="mx-1">
+          <v-icon>mdi-home</v-icon>
+        </v-btn>
+        <v-btn to="/mes-couteaux" class="mx-1">Mes couteaux</v-btn>
+        <v-btn to="/a-propos" class="mx-1">À propos</v-btn>
+      </div>
+    </v-app-bar>
+    <v-main>
+      <slot />
+    </v-main>
+    <v-footer>
+      <v-container>
+        <v-row justify="center">
+          <v-col class="text-center">
+            <p>Les couteaux de Nono © {{ (new Date()).getFullYear() }}</p>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-footer>
+  </v-app>
 </template>
 
 <static-query>
@@ -37,6 +47,17 @@ query {
   }
 }
 </static-query>
+
+<script>
+export default {
+  name: "DefaultLayout",
+  data() {
+    return {
+      sidebar: false,
+    };
+  },
+};
+</script>
 
 <style>
 body {

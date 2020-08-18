@@ -12,9 +12,15 @@
     "eslint": "^6.8.0",
     "gridsome": "^0.7.14",
     "gridsome-plugin-netlify-cms": "^1.0.9",
-    "netlify-cms": "^2.10.47"
+    "netlify-cms": "^2.10.47",
+    "vuetify": "^2.3.8"
   },
   "devDependencies": {
-    "gridsome-plugin-tailwindcss": "^2.2.48"
+    "deepmerge": "^4.2.2",
+    "fibers": "^5.0.0",
+    "gridsome-plugin-tailwindcss": "^2.2.48",
+    "sass": "^1.26.10",
+    "sass-loader": "7.3.1",
+    "vuetify-loader": "^1.6.0"
   }
 }

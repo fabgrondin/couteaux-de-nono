@@ -5,9 +5,25 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
+
 module.exports = function (api) {
+  api.chainWebpack((config, { isServer }) => {
+    config.plugin('vuetify-loader').use(VuetifyLoaderPlugin);
+  })
   api.loadSource(({ addCollection }) => {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
+    const backgrounds = addCollection('Backgrounds')
+
+    backgrounds.addNode({
+      id: 1,
+      image: require.resolve('./src/assets/fire1.jpg')
+    })
+
+    backgrounds.addNode({
+      id: 2,
+      image: require.resolve('./src/assets/fire2.jpg')
+    })
   })
 
   api.createPages(({ createPage }) => {
