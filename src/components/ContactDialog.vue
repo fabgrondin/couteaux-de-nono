@@ -17,18 +17,13 @@
           <v-card-title class="text-h3 justify-center font-gloria text-fire"
             >Contact</v-card-title
           >
-          <form
-            name="contact"
-            method="post"
-            data-netlify="true"
-            data-netlify-honeypot="bot-field"
-          >
+          <form name="contact" @submit="handleSubmit">
             <v-card-text>
               <v-form>
-                <input type="hidden" name="form-name" value="contact" />
                 <v-text-field
                   ref="email"
                   title="E-mail"
+                  name="email"
                   label="E-mail*"
                   v-model="email"
                   :rules="[() => !!email || 'Champ requis']"
@@ -37,6 +32,7 @@
                 <v-textarea
                   ref="message"
                   title="Message"
+                  name="message"
                   label="Message*"
                   v-model="message"
                   :rules="[() => !!message || 'Champ requis']"
@@ -53,12 +49,15 @@
                 >Fermer</v-btn
               >
               <v-spacer></v-spacer>
-              <v-btn @click="send">Envoyer</v-btn>
+              <v-btn :loading="loading" @click="handleSubmit">Envoyer</v-btn>
             </v-card-actions>
           </form>
         </v-card>
       </v-dialog>
     </v-row>
+    <v-snackbar v-model="snackbar" :color="colorSnackbar" centered outlined>{{
+      textSnackbar
+    }}</v-snackbar>
   </v-container>
 </template>
 
@@ -70,39 +69,57 @@ export default {
       dialog: false,
       email: "",
       message: "",
+      loading: false,
+      snackbar: false,
+      colorSnackbar: "green",
+      textSnackbar: "Votre message a été envoyé",
     };
   },
   methods: {
-    encode(data) {
-      return Object.keys(data)
-        .map(
-          (key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`
-        )
-        .join("&");
-    },
-    send() {
-      const data = this.encode({
-        "form-name": "contact",
-        email: this.email,
-        message: this.message,
+    submitToServer() {
+      return new Promise((resolve, reject) => {
+        fetch(`${process.env.GRIDSOME_FUNCTIONS_URL}/mail`, {
+          method: "POST",
+          body: JSON.stringify({
+            email: this.email,
+            message: this.message,
+          }),
+        })
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
-
-      fetch("/", {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        referrerPolicy: "no-referrer",
-        body: data,
-      })
-        .then((response) => console.log(response))
-        .catch((error) => console.log(error));
-
-      this.resetForm();
-      this.dialog = false;
+    },
+    handleSubmit() {
+      this.loading = true;
+      this.submitToServer()
+        .then((response) => {
+          const body = response.json();
+          if (Number(response.status) !== 200) {
+            this.colorSnackbar = "red";
+            this.textSnackbar =
+              "Une erreur s'est produite durant l'envoi du message";
+            this.snackbar = true;
+          } else {
+            this.colorSnackbar = "green";
+            this.textSnackbar = "Votre message a été envoyé";
+            this.snackbar = true;
+            this.resetForm();
+            this.dialog = false;
+          }
+        })
+        .catch((err) => {
+          this.colorSnackbar = "red";
+          this.textSnackbar =
+            "Une erreur s'est produite durant l'envoi du message";
+          this.snackbar = true;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     resetForm() {
       this.email = "";

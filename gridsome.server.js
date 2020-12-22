@@ -7,7 +7,21 @@
 
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
 
+var { createProxyMiddleware } = require("http-proxy-middleware");
+
 module.exports = function (api) {
+  api.configureServer(app => {
+    app.use(
+      "/.netlify/functions/",
+      createProxyMiddleware({
+        target: "http://localhost:9000",
+        pathRewrite: {
+          "/.netlify/functions/": ""
+        }
+      })
+    );
+  });
+
   api.chainWebpack((config, { isServer }) => {
     config.plugin('vuetify-loader').use(VuetifyLoaderPlugin);
   })
