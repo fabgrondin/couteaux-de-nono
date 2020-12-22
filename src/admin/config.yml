@@ -13,7 +13,8 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Titre", name: "title", widget: "string"}
       - {label: "Images", name: "thumbnail", widget: "image"}
-      - {label: "Publish Date", name: "date", widget: "date"}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Date de publication", name: "date", widget: "date"}
+      - {label: "Ordre", name: "order", widget: "number", valueType: "int", min: 1, step: 1}
+      - {label: "Contenu", name: "body", widget: "markdown"}

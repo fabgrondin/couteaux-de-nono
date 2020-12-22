@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer class="hidden-sm-and-up" v-model="sidebar" app>
+    <!-- <v-navigation-drawer class="hidden-sm-and-up" v-model="sidebar" app>
       <v-list>
         <v-list-item>
           <v-btn to="/">Accueil</v-btn>
@@ -21,10 +21,9 @@
         <v-btn to="/" class="mx-1">
           <v-icon>mdi-home</v-icon>
         </v-btn>
-        <v-btn to="/mes-couteaux" class="mx-1">Mes couteaux</v-btn>
         <v-btn to="/a-propos" class="mx-1">À propos</v-btn>
       </div>
-    </v-app-bar>
+    </v-app-bar>-->
     <v-main>
       <slot />
     </v-main>
@@ -32,7 +31,7 @@
       <v-container>
         <v-row justify="center">
           <v-col class="text-center">
-            <p>Les couteaux de Nono © {{ (new Date()).getFullYear() }}</p>
+            <p>Les couteaux de Nono © {{ new Date().getFullYear() }}</p>
           </v-col>
         </v-row>
       </v-container>
