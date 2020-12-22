@@ -2,7 +2,7 @@
   "name": "couteaux-de-nono",
   "private": true,
   "scripts": {
-    "build": "gridsome build && functions:build",
+    "build": "gridsome build && yarn functions:build",
     "develop": "gridsome develop",
     "explore": "gridsome explore",
     "functions:serve": "netlify-lambda serve lambda",
