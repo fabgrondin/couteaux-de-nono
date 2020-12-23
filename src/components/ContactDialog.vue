@@ -53,11 +53,14 @@
             </v-card-actions>
           </form>
         </v-card>
+        <v-snackbar v-model="snackbarError" color="red" centered
+          >Une erreur s'est produite</v-snackbar
+        >
       </v-dialog>
     </v-row>
-    <v-snackbar v-model="snackbar" :color="colorSnackbar" centered outlined>{{
-      textSnackbar
-    }}</v-snackbar>
+    <v-snackbar v-model="snackbarSuccess" color="green" centered
+      >Votre message a été envoyé</v-snackbar
+    >
   </v-container>
 </template>
 
@@ -70,9 +73,8 @@ export default {
       email: "",
       message: "",
       loading: false,
-      snackbar: false,
-      colorSnackbar: "green",
-      textSnackbar: "Votre message a été envoyé",
+      snackbarError: false,
+      snackbarSuccess: false,
     };
   },
   methods: {
@@ -97,25 +99,16 @@ export default {
       this.loading = true;
       this.submitToServer()
         .then((response) => {
-          const body = response.json();
           if (Number(response.status) !== 200) {
-            this.colorSnackbar = "red";
-            this.textSnackbar =
-              "Une erreur s'est produite durant l'envoi du message";
-            this.snackbar = true;
+            this.snackbarError = true;
           } else {
-            this.colorSnackbar = "green";
-            this.textSnackbar = "Votre message a été envoyé";
-            this.snackbar = true;
+            this.snackbarSuccess = true;
             this.resetForm();
             this.dialog = false;
           }
         })
         .catch((err) => {
-          this.colorSnackbar = "red";
-          this.textSnackbar =
-            "Une erreur s'est produite durant l'envoi du message";
-          this.snackbar = true;
+          this.snackbarError = true;
         })
         .finally(() => {
           this.loading = false;

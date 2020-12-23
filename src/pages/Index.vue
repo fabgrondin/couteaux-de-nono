@@ -3,7 +3,9 @@
     <v-parallax :src="$page.background.image.src" style="height: 90vh">
       <v-row align-content="start">
         <v-col>
-          <h1 class="text-center font-gloria text-fire text-display">
+          <h1
+            class="text-center font-gloria text-fire text-display text-sm-h3 text-md-h2"
+          >
             Les couteaux de Nono
           </h1>
         </v-col>

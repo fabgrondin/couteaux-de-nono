@@ -11,8 +11,8 @@ let client = nodemailer.createTransport(smtpTransport({
     service: 'gmail',
     host: 'smtp.gmail.com',
     auth: {
-        user: 'couteauxdenono@gmail.com',
-        pass: '8GeQLss5vJUe'
+        user: process.env.MAIL_USERNAME,
+        pass: process.env.MAIL_PASSWORD
     }
 }));
 
@@ -46,8 +46,8 @@ exports.handler = function (event, context, callback) {
     }
 
     const mailOptions = {
-        from: 'couteauxdenono@gmail.com',
-        to: '0fabien0@gmail.com',
+        from: process.env.MAIL_USERNAME,
+        to: process.env.MAIL_RECIPIENT,
         subject: 'Contact les couteaux de Nono',
         text: `Expéditeur :\n${payload.email}\n Message :\n${payload.message}`
     }
