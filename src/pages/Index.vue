@@ -4,7 +4,8 @@
       <v-row align-content="start">
         <v-col>
           <h1
-            class="text-center font-gloria text-fire text-display text-sm-h3 text-md-h2"
+            class="text-center font-gloria text-fire text-display"
+            :class="$vuetify.breakpoint.smAndDown ? 'sm' : ''"
           >
             Les couteaux de Nono
           </h1>
@@ -114,6 +115,9 @@ export default {
 .text-display {
   font-size: 108px;
   letter-spacing: 0.2em;
+  &.sm {
+    font-size: 60px;
+  }
 }
 
 .font-gloria {
