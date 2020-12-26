@@ -4,12 +4,11 @@
       <v-dialog v-model="dialog" width="500">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            class="mr-5 mt-5"
+            class="mr-5 mt-1 btn-fire"
             fab
             v-bind="attrs"
             v-on="on"
-            x-large
-            color="#fda051"
+            :x-large="$vuetify.breakpoint.mdAndUp ? true : false"
             ><v-icon>mdi-email-outline</v-icon></v-btn
           >
         </template>
