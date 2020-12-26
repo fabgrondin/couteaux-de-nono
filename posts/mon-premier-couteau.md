@@ -1,7 +1,11 @@
 ---
-title: Mon premier Couteau
-thumbnail: /uploads/knife-1088529_1280.png
+title: Couteau de camp
+thumbnail: /uploads/img_20201226_112807-2-.jpg
 date: 2019-11-02T13:15:02.929Z
 order: 1
 ---
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Forgé à partir d'une lime de maréchal ferrant. 
+
+Manche en amarante.
+
+Lacet cuir et perle en cade.
