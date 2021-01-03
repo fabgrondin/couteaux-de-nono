@@ -26,41 +26,33 @@
             :class="index === 0 ? 'mb-6 mb-md-12' : 'my-6 my-md-12'"
           >
             <v-card-title
-              class="font-gloria text-fire text-h2 text-lg-h1 word-break-normal"
-              :class="
-                $vuetify.breakpoint.xl
-                  ? index % 2 === 0
-                    ? ''
-                    : 'justify-end'
-                  : ''
-              "
+              class="font-gloria text-fire text-h2 text-lg-h1 word-break-normal justify-center"
+              :class="index % 2 === 0 ? 'justify-xl-start' : 'justify-xl-end'"
               >{{ post.node.title }}</v-card-title
             >
-            <div
-              class="d-xl-flex align-center"
+            <v-row
+              align-content="center"
               :class="index % 2 === 0 ? '' : 'flex-row-reverse'"
             >
-              <v-img
-                :src="post.node.thumbnail"
-                :min-width="$vuetify.breakpoint.xl ? '50%' : '100%'"
-                :max-width="$vuetify.breakpoint.xl ? '50%' : '100%'"
-                contain
-                eager
+              <v-col cols="12" xl="6">
+                <g-image
+                  :src="post.node.thumbnail"
+                  style="width: 100%"
+                  immediate
+                ></g-image>
+              </v-col>
+              <v-col
+                cols="12"
+                xl="6"
+                class="d-flex flex-column justify-xl-center"
               >
-                <template v-slot:placeholder>
-                  <div
-                    :style="{
-                      width: $vuetify.breakpoint.xl ? '50%' : '100%',
-                    }"
-                  ></div>
-                </template>
-              </v-img>
-              <v-card-text
-                class="text-h6 text-lg-h4"
-                :class="index % 2 === 0 ? '' : 'text-right'"
-                v-html="post.node.content"
-              ></v-card-text>
-            </div>
+                <v-card-text
+                  class="text-h6 text-lg-h4 text-center"
+                  :class="index % 2 === 0 ? 'text-xl-left' : 'text-xl-right'"
+                  v-html="post.node.content"
+                ></v-card-text>
+              </v-col>
+            </v-row>
           </v-card>
         </v-lazy>
       </v-row>
@@ -71,7 +63,7 @@
 query {
   background:backgrounds(id: 2) {
     id
-    image(height: 800)
+    image(height: 800, quality: 70)
   },
  posts: allPost(sortBy: "order", order: ASC) {
     edges {

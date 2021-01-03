@@ -5883,6 +5883,13 @@ gray-matter@^4.0.2:
     section-matter "^1.0.0"
     strip-bom-string "^1.0.0"
 
+gridsome-plugin-netlify-cms-paths@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/gridsome-plugin-netlify-cms-paths/-/gridsome-plugin-netlify-cms-paths-0.3.1.tgz#8a991fbaf19b959a6840bb47d8d7928c131d2ef3"
+  integrity sha512-KmVea2At32B7OffUIgb5JXlGD1WfA5a6DUeQl1W98ZK4SQpGoP4JS7ICFI4X+Xgv3P6ZWyO4TnT9TeV7oCKV1A==
+  dependencies:
+    js-yaml "^3.13.1"
+
 gridsome-plugin-netlify-cms@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/gridsome-plugin-netlify-cms/-/gridsome-plugin-netlify-cms-1.0.9.tgz#10c2e594225ca7fd6cfe876a2c4b583a4dec0d4c"

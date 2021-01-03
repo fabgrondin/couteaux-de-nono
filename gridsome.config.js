@@ -26,13 +26,21 @@ module.exports = {
           plugins: [
             // ...local plugins
           ]
-        }
+        },
+        coverField: 'thumbnail'
       }
     },
     {
       use: `gridsome-plugin-netlify-cms`,
       options: {
         publicPath: `/admin`
+      }
+    },
+    {
+      use: 'gridsome-plugin-netlify-cms-paths',
+      options: {
+        contentTypes: ['Post'],
+        coverField: 'thumbnail'
       }
     }
   ]
