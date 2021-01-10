@@ -17,6 +17,7 @@
             >Contact</v-card-title
           >
           <form name="contact" @submit="handleSubmit">
+            <input type="hidden" name="foldername" />
             <v-card-text>
               <v-form>
                 <v-text-field
@@ -77,6 +78,13 @@ export default {
     };
   },
   methods: {
+    encode(data) {
+      return Object.keys(data)
+        .map(
+          (key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
+        )
+        .join("&");
+    },
     submitToServer() {
       return new Promise((resolve, reject) => {
         fetch(`${process.env.GRIDSOME_FUNCTIONS_URL}/mail`, {
@@ -94,9 +102,29 @@ export default {
           });
       });
     },
+    submitToNetlify() {
+      return new Promise((resolve, reject) => {
+        fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: this.encode({
+            "form-name": "contact",
+            email: this.email,
+            message: this.message,
+          }),
+        })
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((err) => {
+            console.log(err);
+            reject(err);
+          });
+      });
+    },
     handleSubmit() {
       this.loading = true;
-      this.submitToServer()
+      this.submitToNetlify()
         .then((response) => {
           if (Number(response.status) !== 200) {
             this.snackbarError = true;
