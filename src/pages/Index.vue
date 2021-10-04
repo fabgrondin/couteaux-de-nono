@@ -14,6 +14,32 @@
     </v-parallax>
     <contact-dialog></contact-dialog>
     <v-container fluid>
+      <v-row justify="center" class="mb-4">
+        <v-col cols="12" lg="10">
+          <div
+            class="font-gloria text-fire text-h2 text-lg-h1 word-break-normal justify-center"
+          >
+            Arnaud Calligher
+          </div>
+          <v-row>
+            <v-col>
+              <g-image
+                src="@/assets/profil.jpg"
+                width="400"
+                contain
+                class="float-left ma-4"
+                immediate
+              ></g-image>
+              <div class="text-h6 text-lg-h4 pa-4">
+                Forgeron coutelier amateur, voici quelques photos de mes
+                réalisations, n'hésitez pas à me contacter pour plus de détails.
+                <br />
+                Arnaud
+              </div>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
       <v-row justify="center">
         <v-lazy
           min-width="100%"
@@ -25,16 +51,17 @@
             min-width="100%"
             :class="index === 0 ? 'mb-6 mb-md-12' : 'my-6 my-md-12'"
           >
-            <v-card-title
+            <!-- <v-card-title
+              v-if="post.node.title"
               class="font-gloria text-fire text-h2 text-lg-h1 word-break-normal justify-center"
               :class="index % 2 === 0 ? 'justify-xl-start' : 'justify-xl-end'"
               >{{ post.node.title }}</v-card-title
-            >
+            > -->
             <v-row
               align-content="center"
               :class="index % 2 === 0 ? '' : 'flex-row-reverse'"
             >
-              <v-col cols="12" xl="6">
+              <v-col cols="12" :lg="post.node.content ? 6 : 12">
                 <g-image
                   :src="post.node.thumbnail"
                   style="width: 100%"
@@ -42,13 +69,14 @@
                 ></g-image>
               </v-col>
               <v-col
+                v-if="post.node.content"
                 cols="12"
-                xl="6"
-                class="d-flex flex-column justify-xl-center"
+                lg="6"
+                class="d-flex flex-column justify-lg-center"
               >
                 <v-card-text
                   class="text-h6 text-lg-h4 text-center"
-                  :class="index % 2 === 0 ? 'text-xl-left' : 'text-xl-right'"
+                  :class="index % 2 === 0 ? 'text-lg-left' : 'text-lg-right'"
                   v-html="post.node.content"
                 ></v-card-text>
               </v-col>

@@ -4,7 +4,7 @@ backend:
 media_folder: "static/uploads"
 public_folder: "/uploads"
 
-locale: 'fr'
+locale: "fr"
 
 collections:
   - name: "posts"
@@ -13,8 +13,16 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Titre", name: "title", widget: "string"}
-      - {label: "Images", name: "thumbnail", widget: "image"}
-      - {label: "Date de publication", name: "date", widget: "date"}
-      - {label: "Ordre", name: "order", widget: "number", valueType: "int", min: 1, step: 1}
-      - {label: "Contenu", name: "body", widget: "markdown"}
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Images", name: "thumbnail", widget: "image" }
+      - { label: "Date de publication", name: "date", widget: "date" }
+      - {
+          label: "Ordre",
+          name: "order",
+          widget: "number",
+          valueType: "int",
+          min: 1,
+          step: 1,
+          required: false,
+        }
+      - { label: "Contenu", name: "body", widget: "markdown", required: false }
