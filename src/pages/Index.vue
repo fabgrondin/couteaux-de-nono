@@ -25,7 +25,7 @@
             <v-col>
               <g-image
                 src="@/assets/profil.jpg"
-                width="400"
+                width="300"
                 contain
                 class="float-left ma-4"
                 immediate
@@ -41,48 +41,9 @@
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-lazy
-          min-width="100%"
-          v-for="(post, index) in $page.posts.edges"
-          :key="index"
-          v-model="cardsActive[index]"
-        >
-          <v-card
-            min-width="100%"
-            :class="index === 0 ? 'mb-6 mb-md-12' : 'my-6 my-md-12'"
-          >
-            <!-- <v-card-title
-              v-if="post.node.title"
-              class="font-gloria text-fire text-h2 text-lg-h1 word-break-normal justify-center"
-              :class="index % 2 === 0 ? 'justify-xl-start' : 'justify-xl-end'"
-              >{{ post.node.title }}</v-card-title
-            > -->
-            <v-row
-              align-content="center"
-              :class="index % 2 === 0 ? '' : 'flex-row-reverse'"
-            >
-              <v-col cols="12" :lg="post.node.content ? 6 : 12">
-                <g-image
-                  :src="post.node.thumbnail"
-                  style="width: 100%"
-                  immediate
-                ></g-image>
-              </v-col>
-              <v-col
-                v-if="post.node.content"
-                cols="12"
-                lg="6"
-                class="d-flex flex-column justify-lg-center"
-              >
-                <v-card-text
-                  class="text-h6 text-lg-h4 text-center"
-                  :class="index % 2 === 0 ? 'text-lg-left' : 'text-lg-right'"
-                  v-html="post.node.content"
-                ></v-card-text>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-lazy>
+        <template v-for="(photo, index) in $page.photos.edges">
+          <g-image class="ma-2" :src="photo.node.image" :key="index"></g-image>
+        </template>
       </v-row>
     </v-container>
   </Layout>
@@ -93,13 +54,11 @@ query {
     id
     image(height: 800, quality: 70)
   },
- posts: allPost(sortBy: "order", order: ASC) {
+ photos: allPhoto {
     edges {
       node {
         id
-        title
-        thumbnail(width: 700, quality: 70)
-        content
+        image(width: 300, height: 300, quality: 70, fit: contain)
       }
     }
   }
@@ -120,7 +79,7 @@ export default {
     };
   },
   created() {
-    this.cardsActive = new Array(this.$page.posts.edges.length).fill(false);
+    this.cardsActive = new Array(this.$page.photos.edges.length).fill(false);
   },
 };
 </script>

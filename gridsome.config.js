@@ -16,32 +16,5 @@ module.exports = {
       ],
     },
   },
-  plugins: [
-    {
-      use: "@gridsome/source-filesystem",
-      options: {
-        path: "posts/**/*.md",
-        typeName: "Post",
-        remark: {
-          plugins: [
-            // ...local plugins
-          ],
-        },
-        coverField: "thumbnail",
-      },
-    },
-    {
-      use: `gridsome-plugin-netlify-cms`,
-      options: {
-        publicPath: `/admin`,
-      },
-    },
-    {
-      use: "gridsome-plugin-netlify-cms-paths",
-      options: {
-        contentTypes: ["Post"],
-        coverField: "thumbnail",
-      },
-    },
-  ],
+  plugins: [],
 };

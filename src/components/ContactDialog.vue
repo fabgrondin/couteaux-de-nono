@@ -9,14 +9,6 @@
         target="__blank "
         ><v-icon>mdi-instagram</v-icon></v-btn
       >
-      <v-btn
-        class="mr-5 mt-1 btn-fire"
-        fab
-        :x-large="$vuetify.breakpoint.mdAndUp ? true : false"
-        href="https://www.facebook.com/nonocouteaux/"
-        target="__blank"
-        ><v-icon>mdi-facebook</v-icon></v-btn
-      >
       <v-dialog v-model="dialog" width="500">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -170,7 +162,7 @@ export default {
 <style scoped>
 .contact-dialog {
   position: sticky;
-  top: 0px;
+  top: 10px;
   z-index: 999;
 }
 </style>
