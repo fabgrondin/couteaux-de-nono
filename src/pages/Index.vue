@@ -41,9 +41,21 @@
         </v-col>
       </v-row>
       <v-row justify="center">
-        <template v-for="(photo, index) in $page.photos.edges">
+        <!-- <template v-for="(photo, index) in $page.photos.edges">
           <g-image class="ma-2" :src="photo.node.image" :key="index"></g-image>
-        </template>
+        </template> -->
+        <silent-box :gallery="gallery">
+          <template v-slot:silentbox-item="{ silentboxItem }">
+            <g-image
+              class="ma-1"
+              :src="silentboxItem.thumbnail"
+              :alt="silentboxItem.alt"
+              :width="silentboxItem.thumbnailWidth"
+              :height="silentboxItem.thumbnailHeight"
+              loading="lazy"
+            ></g-image>
+          </template>
+        </silent-box>
       </v-row>
     </v-container>
   </Layout>
@@ -58,6 +70,14 @@ query {
     edges {
       node {
         id
+        image(width: 800, height: 800, quality: 70, fit: contain)
+      }
+    }
+  },
+  thumbnails: allPhoto {
+    edges {
+      node {
+        id
         image(width: 300, height: 300, quality: 70, fit: contain)
       }
     }
@@ -67,19 +87,31 @@ query {
 
 <script>
 import ContactDialog from "@/components/ContactDialog";
+import SilentBox from "vue-silentbox/src/components/gallery.vue";
 
 export default {
   metaInfo: {
     title: "Accueil",
+    description:
+      "Forgeron coutelier amateur, voici quelques photos de mes réalisations",
   },
-  components: { ContactDialog },
+  components: { ContactDialog, SilentBox },
   data() {
     return {
-      cardsActive: [],
+      gallery: [],
     };
   },
   created() {
-    this.cardsActive = new Array(this.$page.photos.edges.length).fill(false);
+    this.gallery = this.$page.photos.edges.reduce((acc, photo) => {
+      const thumbnail = this.$page.thumbnails.edges.find(
+        (x) => x.node.id == photo.node.id
+      );
+      acc.push({
+        src: photo.node.image.src,
+        thumbnail: thumbnail.node.image.src,
+      });
+      return acc;
+    }, []);
   },
 };
 </script>
@@ -117,5 +149,9 @@ export default {
   background-color: #fda051 !important;
   box-shadow: 0px 0px 4px #fff, 0px 0px 10px #ff3, 0px 0px 20px #f90,
     0px 0px 40px #c33 !important;
+}
+
+#silentbox-gallery {
+  text-align: center;
 }
 </style>

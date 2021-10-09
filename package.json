@@ -20,6 +20,7 @@
     "netlify-lambda": "^2.0.2",
     "nodemailer": "^6.4.17",
     "nodemailer-smtp-transport": "^2.7.4",
+    "vue-silentbox": "^2.4.5",
     "vuetify": "^2.3.8"
   },
   "devDependencies": {
