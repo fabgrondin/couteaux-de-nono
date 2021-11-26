@@ -11,15 +11,23 @@ const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
 
 var { createProxyMiddleware } = require("http-proxy-middleware");
 
+const { scrapingInstagramPosts } = require("gatsby-source-instagram/instagram");
+const _ = require(`lodash`);
+async function getInstagramPhotos() {
+  const photos = await scrapingInstagramPosts({ username: "45204298927" });
+
+  return photos;
+}
+
 module.exports = function(api) {
-  api.loadSource(({ addSchemaTypes }) => {
-    addSchemaTypes(`
-      type Photo implements Node {
-        id: ID!
-        image: Image
-      }
-    `);
-  });
+  // api.loadSource(({ addSchemaTypes }) => {
+  //   addSchemaTypes(`
+  //     type Photo implements Node {
+  //       id: ID!
+  //       image: Image
+  //     }
+  //   `);
+  // });
 
   api.configureServer((app) => {
     app.use(
@@ -36,7 +44,7 @@ module.exports = function(api) {
   api.chainWebpack((config, { isServer }) => {
     config.plugin("vuetify-loader").use(VuetifyLoaderPlugin);
   });
-  api.loadSource(({ addCollection }) => {
+  api.loadSource(async ({ addCollection }) => {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
     const backgrounds = addCollection("Backgrounds");
 
@@ -50,18 +58,24 @@ module.exports = function(api) {
       image: require.resolve("./src/assets/fire2.jpg"),
     });
 
-    const photos = addCollection("Photo");
+    const photos = addCollection({ typeName: "Photo" });
     const startPath = resolve("./photos");
-    const files = getFiles("./photos").then((files) => {
-      files.forEach((imagePath) => {
-        const imageName = relative(startPath, imagePath).replace(/\\/g, "/");
-        const image = require.resolve(imagePath);
-        photos.addNode({
-          id: imageName,
-          image: image,
-        });
+    const files = await getFiles("./photos");
+    files.forEach((imagePath) => {
+      const imageName = relative(startPath, imagePath).replace(/\\/g, "/");
+      const image = require.resolve(imagePath);
+      photos.addNode({
+        id: imageName,
+        image: image,
       });
     });
+    const instagramPosts = addCollection({ typeName: "InstagramPost" });
+    const posts = await getInstagramPhotos();
+    if (posts) {
+      posts.forEach((post) => {
+        instagramPosts.addNode(createPostNode(post));
+      });
+    }
   });
 
   api.createPages(({ createPage }) => {
@@ -78,4 +92,35 @@ async function getFiles(dir) {
     })
   );
   return Array.prototype.concat(...files);
+}
+
+function createPostNode(datum) {
+  return {
+    username: datum.username || datum.owner.username || datum.owner.id,
+    id: datum.shortcode,
+    children: [],
+    likes:
+      _.get(datum, `edge_liked_by.count`) ||
+      _.get(datum, `edge_media_preview_like.count`) ||
+      datum.like_count,
+    caption:
+      _.get(datum, `edge_media_to_caption.edges[0].node.text`) || datum.caption,
+    thumbnails: datum.thumbnail_resources,
+    mediaType: datum.__typename || datum.media_type,
+    preview: datum.display_url || datum.thumbnail_url || datum.media_url,
+    original: datum.display_url || datum.media_url,
+    timestamp:
+      datum.taken_at_timestamp || new Date(datum.timestamp).getTime() / 1000,
+    dimensions: datum.dimensions,
+    comments:
+      _.get(datum, `edge_media_to_comment.count`) || datum.comments_count,
+    hashtags: datum.hashtags,
+    permalink: datum.permalink,
+    carouselImages: _.get(datum, `children.data`, []).map((imgObj) => {
+      return {
+        preview: imgObj.media_url,
+        ...imgObj,
+      };
+    }),
+  };
 }

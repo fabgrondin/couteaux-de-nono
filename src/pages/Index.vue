@@ -17,7 +17,12 @@
       <v-row justify="center" class="mb-4">
         <v-col cols="12" lg="10">
           <div
-            class="font-gloria text-fire text-h2 text-lg-h1 word-break-normal justify-center"
+            class="
+              font-gloria
+              text-fire text-h2 text-lg-h1
+              word-break-normal
+              justify-center
+            "
           >
             Arnaud Calligher
           </div>
@@ -45,7 +50,7 @@
           <g-image class="ma-2" :src="photo.node.image" :key="index"></g-image>
         </template> -->
         <silent-box :gallery="gallery">
-          <template v-slot:silentbox-item="{ silentboxItem }">
+          <!-- <template v-slot:silentbox-item="{ silentboxItem }">
             <g-image
               class="ma-1"
               :src="silentboxItem.thumbnail"
@@ -54,7 +59,7 @@
               :height="silentboxItem.thumbnailHeight"
               loading="lazy"
             ></g-image>
-          </template>
+          </template> -->
         </silent-box>
       </v-row>
     </v-container>
@@ -66,22 +71,7 @@ query {
     id
     image(height: 800, quality: 70)
   },
- photos: allPhoto {
-    edges {
-      node {
-        id
-        image(width: 800, height: 800, quality: 70, fit: contain)
-      }
-    }
-  },
-  thumbnails: allPhoto {
-    edges {
-      node {
-        id
-        image(width: 300, height: 300, quality: 70, fit: contain)
-      }
-    }
-  }
+ photos: allInstagramPost{edges{node{id, username, preview}}}
 }
 </page-query>
 
@@ -103,12 +93,9 @@ export default {
   },
   created() {
     this.gallery = this.$page.photos.edges.reduce((acc, photo) => {
-      const thumbnail = this.$page.thumbnails.edges.find(
-        (x) => x.node.id == photo.node.id
-      );
       acc.push({
-        src: photo.node.image.src,
-        thumbnail: thumbnail.node.image.src,
+        src: photo.node.preview,
+        thumbnail: photo.node.preview,
       });
       return acc;
     }, []);
